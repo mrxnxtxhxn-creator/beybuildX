@@ -148,54 +148,110 @@
 </div>
 
 <script>
-// LISTA DE BLADES INDIVIDUAIS
-const BLADES = [
-    "AeroPegasus", "BahamutBlitz", "CobaltDragoon", "DranBrave", "DranBuster", 
-    "DranDagger", "DranSword", "EmperorMight", "GloryValkyrie", "GolemRock", 
-    "HellsChain", "HellsScythe", "ImpactDrake", "KnightMail", "KnightShield", 
-    "MeteorDragoon", "PhoenixRudder", "PhoenixWing", "Rock Leone", "SamuraiSaber", 
-    "SharkEdge", "SharkGill", "SilverWolf", "UnicornSting", "WizardArrow", 
-    "WizardRod", "WyvernGale", "WyvernHover"
-];
+// BANCO DE ATRIBUTOS DAS PEÇAS (BASE DE CÁLCULO)
+const BLADES_DB = {
+    "DranSword": { weight: 35.0, line: "BX", atk: 55, def: 20, sta: 15, mob: 30 },
+    "DranBuster": { weight: 38.0, line: "UX", atk: 65, def: 15, sta: 10, mob: 35 },
+    "DranDagger": { weight: 34.5, line: "BX", atk: 50, def: 20, sta: 20, mob: 30 },
+    "DranBrave": { weight: 36.0, line: "CX", atk: 58, def: 18, sta: 15, mob: 32 },
+    "HellsScythe": { weight: 33.0, line: "BX", atk: 30, def: 30, sta: 40, mob: 20 },
+    "HellsChain": { weight: 33.5, line: "BX", atk: 32, def: 35, sta: 35, mob: 20 },
+    "WizardRod": { weight: 35.5, line: "UX", atk: 15, def: 40, sta: 65, mob: 15 },
+    "WizardArrow": { weight: 32.0, line: "BX", atk: 15, def: 35, sta: 55, mob: 15 },
+    "KnightShield": { weight: 32.5, line: "BX", atk: 20, def: 55, sta: 25, mob: 15 },
+    "KnightMail": { weight: 36.5, line: "UX", atk: 25, def: 60, sta: 20, mob: 15 },
+    "PhoenixWing": { weight: 38.0, line: "BX", atk: 60, def: 30, sta: 20, mob: 25 },
+    "PhoenixRudder": { weight: 34.0, line: "UX", atk: 20, def: 30, sta: 58, mob: 18 },
+    "SharkEdge": { weight: 34.0, line: "BX", atk: 60, def: 15, sta: 10, mob: 35 },
+    "SharkGill": { weight: 33.0, line: "BX", atk: 30, def: 25, sta: 50, mob: 20 },
+    "CobaltDragoon": { weight: 37.5, line: "BX", atk: 58, def: 20, sta: 15, mob: 30 },
+    "AeroPegasus": { weight: 37.0, line: "UX", atk: 55, def: 25, sta: 25, mob: 30 },
+    "UnicornSting": { weight: 33.5, line: "BX", atk: 35, def: 35, sta: 35, mob: 25 },
+    "SilverWolf": { weight: 36.0, line: "UX", atk: 20, def: 35, sta: 60, mob: 15 },
+    "ImpactDrake": { weight: 38.5, line: "UX", atk: 62, def: 20, sta: 10, mob: 30 },
+    "GolemRock": { weight: 36.0, line: "UX", atk: 20, def: 58, sta: 25, mob: 15 },
+    "MeteorDragoon": { weight: 35.0, line: "UX", atk: 52, def: 20, sta: 20, mob: 30 },
+    "WyvernGale": { weight: 32.0, line: "BX", atk: 20, def: 30, sta: 50, mob: 20 },
+    "WyvernHover": { weight: 35.5, line: "UX", atk: 18, def: 30, sta: 62, mob: 15 },
+    "Rock Leone": { weight: 34.0, line: "X-Over", atk: 25, def: 50, sta: 30, mob: 15 },
+    "SamuraiSaber": { weight: 36.0, line: "UX", atk: 50, def: 25, sta: 20, mob: 28 },
+    "BahamutBlitz": { weight: 37.0, line: "C-E", atk: 56, def: 22, sta: 18, mob: 30 },
+    "EmperorMight": { weight: 35.0, line: "CX", atk: 35, def: 35, sta: 35, mob: 25 },
+    "GloryValkyrie": { weight: 36.5, line: "U-E", atk: 58, def: 20, sta: 15, mob: 32 }
+};
 
-// LISTA DE RATCHETS
-const RATCHETS = [
-    "0-70", "0-80", "1-50", "1-60", "1-70", "1-80", "2-60", "2-70", "2-80", 
-    "3-60", "3-70", "3-80", "3-85", "4-50", "4-55", "4-60", "4-70", "4-80", 
-    "5-55", "5-60", "5-70", "5-80", "6-60", "6-70", "6-80", "7-55", "7-60", 
-    "7-70", "7-80", "8-70", "8-80", "9-60", "9-65", "9-70", "9-80", "M-85"
-];
+const RATCHETS_DB = {
+    "0-70": 6.2, "0-80": 6.8, "1-50": 5.5, "1-60": 6.0, "1-70": 6.5, "1-80": 7.0,
+    "2-60": 6.0, "2-70": 6.4, "2-80": 6.8, "3-60": 6.2, "3-70": 6.6, "3-80": 7.1, "3-85": 7.4,
+    "4-50": 5.8, "4-55": 6.0, "4-60": 6.4, "4-70": 6.8, "4-80": 7.2, "5-55": 6.2,
+    "5-60": 6.5, "5-70": 6.9, "5-80": 7.3, "6-60": 6.6, "6-70": 7.0, "6-80": 7.4,
+    "7-55": 6.4, "7-60": 6.7, "7-70": 7.1, "7-80": 7.5, "8-70": 7.2, "8-80": 7.6,
+    "9-60": 6.3, "9-65": 6.6, "9-70": 6.9, "9-80": 7.3, "M-85": 7.8
+};
 
-// LISTA DE BITS
-const BITS = [
-    "Accel (A)", "Ball (B)", "Bound Spike (BS)", "Cyclone (C)", "Dot (D)", 
-    "Disk Ball (DB)", "Elevate (E)", "Flat (F)", "Free Ball (FB)", "Gear Ball (GB)", 
-    "Gear Flat (GF)", "Gear Needle (GN)", "Gear Point (GP)", "Gear Rush (GR)", 
-    "Hexa (H)", "High Needle (HN)", "High Taper (HT)", "Impact (I)", "Jolt (J)", 
-    "Kick (K)", "Level (L)", "Low Flat (LF)", "Low Orb (LO)", "Low Rush (LR)", 
-    "Metal Needle (MN)", "Needle (N)", "Orb (O)", "Point (P)", "Quake (Q)", 
-    "Rush (R)", "Rubber Accel (RA)", "Spike (S)", "Taper (T)", "Trans Kick (TK)", 
-    "Trans Point (TP)", "Unite (U)", "Under Needle (UN)", "Vortex (V)", "Wedge (W)", 
-    "Wide Ball (WB)", "Yielding (Y)", "Zap (Z)"
-];
+const BITS_DB = {
+    "Flat (F)": { weight: 2.4, atk: 30, def: 5, sta: 5, mob: 45 },
+    "Low Flat (LF)": { weight: 2.4, atk: 35, def: 5, sta: 5, mob: 50 },
+    "Gear Flat (GF)": { weight: 2.6, atk: 35, def: 5, sta: 5, mob: 52 },
+    "Accel (A)": { weight: 2.5, atk: 32, def: 5, sta: 5, mob: 48 },
+    "Rubber Accel (RA)": { weight: 2.6, atk: 38, def: 5, sta: 0, mob: 55 },
+    "Rush (R)": { weight: 2.4, atk: 25, def: 10, sta: 15, mob: 40 },
+    "Low Rush (LR)": { weight: 2.4, atk: 28, def: 10, sta: 12, mob: 42 },
+    "Gear Rush (GR)": { weight: 2.5, atk: 28, def: 10, sta: 12, mob: 44 },
+    "Ball (B)": { weight: 2.2, atk: 5, def: 20, sta: 45, mob: 10 },
+    "Disk Ball (DB)": { weight: 2.8, atk: 5, def: 25, sta: 40, mob: 10 },
+    "Free Ball (FB)": { weight: 2.3, atk: 5, def: 18, sta: 48, mob: 12 },
+    "Gear Ball (GB)": { weight: 2.4, atk: 10, def: 15, sta: 40, mob: 20 },
+    "Wide Ball (WB)": { weight: 2.3, atk: 5, def: 28, sta: 38, mob: 10 },
+    "Orb (O)": { weight: 2.2, atk: 5, def: 15, sta: 48, mob: 10 },
+    "Low Orb (LO)": { weight: 2.2, atk: 5, def: 18, sta: 46, mob: 10 },
+    "Needle (N)": { weight: 2.1, atk: 5, def: 40, sta: 20, mob: 10 },
+    "High Needle (HN)": { weight: 2.3, atk: 5, def: 38, sta: 22, mob: 12 },
+    "Gear Needle (GN)": { weight: 2.3, atk: 10, def: 35, sta: 18, mob: 20 },
+    "Metal Needle (MN)": { weight: 2.9, atk: 5, def: 45, sta: 25, mob: 8 },
+    "Under Needle (UN)": { weight: 2.2, atk: 5, def: 38, sta: 22, mob: 10 },
+    "Hexa (H)": { weight: 2.7, atk: 15, def: 35, sta: 20, mob: 20 },
+    "Point (P)": { weight: 2.3, atk: 20, def: 20, sta: 25, mob: 25 },
+    "Gear Point (GP)": { weight: 2.4, atk: 22, def: 18, sta: 22, mob: 28 },
+    "Taper (T)": { weight: 2.3, atk: 22, def: 18, sta: 20, mob: 30 },
+    "High Taper (HT)": { weight: 2.4, atk: 20, def: 18, sta: 22, mob: 32 },
+    "Unite (U)": { weight: 2.4, atk: 20, def: 22, sta: 25, mob: 25 },
+    "Yielding (Y)": { weight: 2.2, atk: 0, def: 10, sta: 52, mob: 8 },
+    "Wedge (W)": { weight: 2.2, atk: 5, def: 30, sta: 25, mob: 10 },
+    "Wide Wedge (WW)": { weight: 2.3, atk: 5, def: 35, sta: 22, mob: 10 },
+    "Quake (Q)": { weight: 2.3, atk: 35, def: 5, sta: 5, mob: 45 },
+    "Spike (S)": { weight: 2.1, atk: 5, def: 25, sta: 25, mob: 10 },
+    "Bound Spike (BS)": { weight: 2.5, atk: 5, def: 32, sta: 22, mob: 10 },
+    "Cyclone (C)": { weight: 2.4, atk: 28, def: 10, sta: 15, mob: 40 },
+    "Dot (D)": { weight: 2.2, atk: 5, def: 30, sta: 25, mob: 10 },
+    "Elevate (E)": { weight: 2.5, atk: 15, def: 25, sta: 25, mob: 20 },
+    "Impact (I)": { weight: 2.5, atk: 32, def: 10, sta: 10, mob: 40 },
+    "Jolt (J)": { weight: 2.4, atk: 30, def: 8, sta: 8, mob: 42 },
+    "Kick (K)": { weight: 2.3, atk: 18, def: 18, sta: 20, mob: 28 },
+    "Level (L)": { weight: 2.5, atk: 20, def: 20, sta: 25, mob: 25 },
+    "Trans Kick (TK)": { weight: 2.4, atk: 20, def: 18, sta: 22, mob: 28 },
+    "Trans Point (TP)": { weight: 2.4, atk: 22, def: 20, sta: 22, mob: 26 },
+    "Vortex (V)": { weight: 2.5, atk: 28, def: 10, sta: 12, mob: 42 },
+    "Zap (Z)": { weight: 2.6, atk: 25, def: 15, sta: 15, mob: 35 }
+};
 
 // COMBOS DE FÁBRICA / COLEÇÃO
 const STOCK_COMBOS = [
-    { name: "BahamutBlitz BK1-50I", type: "Ataque", line: "C-E", owned: true },
-    { name: "DranBrave S6-60V", type: "Ataque", line: "CX", owned: true },
-    { name: "DranSword 3-60F", type: "Ataque", line: "BX", owned: true },
-    { name: "EmperorMight HOp", type: "Equilíbrio", line: "CX", owned: true },
-    { name: "GloryValkyrie LF", type: "Ataque", line: "U-E", owned: true },
-    { name: "GolemRock M-85HN", type: "Defesa", line: "UX", owned: true },
-    { name: "HellsScythe 4-60T", type: "Equilíbrio", line: "BX", owned: true },
-    { name: "MeteorDragoon 3-70J", type: "Ataque", line: "UX", owned: true },
-    { name: "Rock Leone 6-80GN", type: "Defesa", line: "BX X-Over", owned: true },
-    { name: "SharkGill 5-60FB", type: "Resistência", line: "BX", owned: true },
-    { name: "UnicornSting 5-60GP", type: "Equilíbrio", line: "BX", owned: true },
-    { name: "AeroPegasus 3-70A", type: "Ataque", line: "UX", owned: false },
-    { name: "SilverWolf 9-70R", type: "Ataque", line: "UX", owned: false },
-    { name: "WizardRod 1-60R", type: "Ataque", line: "UX", owned: false },
-    { name: "WyvernHover 8-80B", type: "Resistência", line: "UX", owned: false }
+    { name: "BahamutBlitz BK1-50I", blade: "BahamutBlitz", ratchet: "1-50", bit: "Impact (I)", type: "Ataque", line: "C-E", owned: true },
+    { name: "DranBrave S6-60V", blade: "DranBrave", ratchet: "6-60", bit: "Vortex (V)", type: "Ataque", line: "CX", owned: true },
+    { name: "DranSword 3-60F", blade: "DranSword", ratchet: "3-60", bit: "Flat (F)", type: "Ataque", line: "BX", owned: true },
+    { name: "EmperorMight HOp", blade: "EmperorMight", ratchet: "4-60", bit: "Orb (O)", type: "Equilíbrio", line: "CX", owned: true },
+    { name: "GloryValkyrie LF", blade: "GloryValkyrie", ratchet: "3-60", bit: "Low Flat (LF)", type: "Ataque", line: "U-E", owned: true },
+    { name: "GolemRock M-85HN", blade: "GolemRock", ratchet: "M-85", bit: "High Needle (HN)", type: "Defesa", line: "UX", owned: true },
+    { name: "HellsScythe 4-60T", blade: "HellsScythe", ratchet: "4-60", bit: "Taper (T)", type: "Equilíbrio", line: "BX", owned: true },
+    { name: "MeteorDragoon 3-70J", blade: "MeteorDragoon", ratchet: "3-70", bit: "Jolt (J)", type: "Ataque", line: "UX", owned: true },
+    { name: "Rock Leone 6-80GN", blade: "Rock Leone", ratchet: "6-80", bit: "Gear Needle (GN)", type: "Defesa", line: "BX X-Over", owned: true },
+    { name: "SharkGill 5-60FB", blade: "SharkGill", ratchet: "5-60", bit: "Free Ball (FB)", type: "Resistência", line: "BX", owned: true },
+    { name: "UnicornSting 5-60GP", blade: "UnicornSting", ratchet: "5-60", bit: "Gear Point (GP)", type: "Equilíbrio", line: "BX", owned: true },
+    { name: "AeroPegasus 3-70A", blade: "AeroPegasus", ratchet: "3-70", bit: "Accel (A)", type: "Ataque", line: "UX", owned: false },
+    { name: "SilverWolf 9-70R", blade: "SilverWolf", ratchet: "9-70", bit: "Rush (R)", type: "Ataque", line: "UX", owned: false },
+    { name: "WizardRod 1-60R", blade: "WizardRod", ratchet: "1-60", bit: "Rush (R)", type: "Ataque", line: "UX", owned: false },
+    { name: "WyvernHover 8-80B", blade: "WyvernHover", ratchet: "8-80", bit: "Ball (B)", type: "Resistência", line: "UX", owned: false }
 ];
 
 function init() {
@@ -205,13 +261,13 @@ function init() {
     });
 
     const selBlade = document.getElementById('select-blade');
-    BLADES.forEach(b => selBlade.innerHTML += `<option value="${b}">${b}</option>`);
+    Object.keys(BLADES_DB).sort().forEach(b => selBlade.innerHTML += `<option value="${b}">${b}</option>`);
 
     const selRatchet = document.getElementById('select-ratchet');
-    RATCHETS.forEach(r => selRatchet.innerHTML += `<option value="${r}">${r}</option>`);
+    Object.keys(RATCHETS_DB).forEach(r => selRatchet.innerHTML += `<option value="${r}">${r}</option>`);
 
     const selBit = document.getElementById('select-bit');
-    BITS.forEach(b => selBit.innerHTML += `<option value="${b}">${b}</option>`);
+    Object.keys(BITS_DB).sort().forEach(b => selBit.innerHTML += `<option value="${b}">${b}</option>`);
 
     loadStockCombo();
 }
@@ -220,33 +276,51 @@ function loadStockCombo() {
     const idx = document.getElementById('select-stock').value;
     const combo = STOCK_COMBOS[idx];
 
+    // Atualiza os dropdowns para sincronizar com o combo de fábrica
+    if (combo.blade) document.getElementById('select-blade').value = combo.blade;
+    if (combo.ratchet) document.getElementById('select-ratchet').value = combo.ratchet;
+    if (combo.bit) document.getElementById('select-bit').value = combo.bit;
+
     document.getElementById('badge-status').innerText = combo.owned ? "NA COLEÇÃO" : "FORA DA COLEÇÃO";
     document.getElementById('badge-status').style.background = combo.owned ? "#00e676" : "#ff1744";
     document.getElementById('badge-status').style.color = combo.owned ? "#000" : "#fff";
 
     document.getElementById('badge-type').innerText = `${combo.type.toUpperCase()} / ${combo.line}`;
-    document.getElementById('val-line').innerText = combo.line;
 
-    let atk = 50, def = 50, sta = 50, mob = 50;
-    if (combo.type === 'Ataque') { atk = 88; mob = 85; sta = 35; def = 45; }
-    else if (combo.type === 'Resistência') { sta = 92; def = 60; atk = 40; mob = 40; }
-    else if (combo.type === 'Defesa') { def = 88; sta = 65; atk = 42; mob = 35; }
-    else { atk = 65; def = 65; sta = 65; mob = 60; }
-
-    updateBars(atk, def, sta, mob);
-    document.getElementById('eval-text').innerText = `Combo ${combo.type} da linha ${combo.line}. ${combo.owned ? 'Item confirmado em seu estoque pessoal.' : 'Item mapeado no banco global.'}`;
+    updateCustomCombo(false); // Recalcula atributos exatos do combo de fábrica
 }
 
-function updateCustomCombo() {
-    const blade = document.getElementById('select-blade').value;
-    const ratchet = document.getElementById('select-ratchet').value;
-    const bit = document.getElementById('select-bit').value;
+function updateCustomCombo(isCustom = true) {
+    const bladeKey = document.getElementById('select-blade').value;
+    const ratchetKey = document.getElementById('select-ratchet').value;
+    const bitKey = document.getElementById('select-bit').value;
 
-    document.getElementById('badge-status').innerText = "COMBO CUSTOMIZADO";
-    document.getElementById('badge-status').style.background = "#00d2ff";
-    document.getElementById('badge-status').style.color = "#000";
+    const bladeData = BLADES_DB[bladeKey] || { weight: 35, line: "BX", atk: 40, def: 30, sta: 30, mob: 20 };
+    const ratchetWeight = RATCHETS_DB[ratchetKey] || 6.5;
+    const bitData = BITS_DB[bitKey] || { weight: 2.3, atk: 15, def: 15, sta: 15, mob: 20 };
 
-    document.getElementById('eval-text').innerText = `Combinação personalizada utilizando Blade ${blade}, Ratchet ${ratchet} e Bit ${bit}. Excelente para testes de bancada.`;
+    // CÁLCULO DE PESO REAL
+    const totalWeight = (bladeData.weight + ratchetWeight + bitData.weight).toFixed(1);
+
+    // CÁLCULO DOS ATRIBUTOS
+    const totalAtk = Math.min(100, bladeData.atk + bitData.atk);
+    const totalDef = Math.min(100, bladeData.def + bitData.def);
+    const totalSta = Math.min(100, bladeData.sta + bitData.sta);
+    const totalMob = Math.min(100, bladeData.mob + bitData.mob);
+
+    // ATUALIZAÇÃO DA INTERFACE
+    document.getElementById('val-weight').innerText = `${totalWeight}g`;
+    document.getElementById('val-line').innerText = bladeData.line;
+
+    if (isCustom) {
+        document.getElementById('badge-status').innerText = "COMBO CUSTOMIZADO";
+        document.getElementById('badge-status').style.background = "#00d2ff";
+        document.getElementById('badge-status').style.color = "#000";
+        document.getElementById('badge-type').innerText = `CUSTOM / ${bladeData.line}`;
+        document.getElementById('eval-text').innerText = `Combinação de ${bladeKey} em Ratchet ${ratchetKey} com Bit ${bitKey}. Peso total calculado: ${totalWeight}g.`;
+    }
+
+    updateBars(totalAtk, totalDef, totalSta, totalMob);
 }
 
 function updateBars(atk, def, sta, mob) {
