@@ -63,7 +63,7 @@
           <h2 class="text-xl font-bold text-slate-200 flex items-center gap-2">
             <i class="fa-solid fa-sliders text-cyan-400"></i> Oficina de Combos
           </h2>
-          <button onclick="generateRandomCombo()" class="bg-cyan-600 hover:bg-cyan-500 text-white text-sm px-4 py-2 rounded-lg font-semibold transition flex items-center gap-2 shadow-lg shadow-cyan-900/40">
+          <button onclick="generateRandomCombo()" class="bg-cyan-600 hover:bg-cyan-500 text-white text-sm px-4 py-2 rounded-lg font-semibold transition flex items-center gap-2 shadow-lg shadow-cyan-900/40 cursor-pointer">
             <i class="fa-solid fa-dice"></i> Combo Aleatório
           </button>
         </div>
@@ -89,10 +89,10 @@
 
         <!-- Card do Combo Resultante -->
         <div class="bg-slate-900/80 border border-cyan-500/30 rounded-2xl p-6 text-center space-y-3 relative overflow-hidden">
-          <div class="text-xs uppercase tracking-widest text-cyan-400 font-bold">Configuração Atual</div>
+          <div class="text-xs uppercase tracking-widest text-cyan-400 font-bold">Configuração Atual do Combo</div>
           <div id="combo-title" class="text-2xl md:text-3xl font-extrabold text-white tracking-wide">---</div>
           <div id="combo-type-badge" class="inline-block px-3 py-1 rounded-full text-xs font-bold uppercase bg-slate-800 text-slate-400">
-            Tipo: Padrão da Lâmina
+            Tipo: Selecione as peças
           </div>
         </div>
       </div>
@@ -112,7 +112,7 @@
     <!-- Lista de Beyblades Adquiridos (Inventário Ativo) -->
     <div class="card p-6 rounded-2xl space-y-4">
       <h2 class="text-xl font-bold text-slate-200 border-b border-slate-700 pb-4 flex items-center gap-2">
-        <i class="fa-solid fa-boxes-stacked text-emerald-400"></i> Beyblades na Coleção (Peças Disponíveis)
+        <i class="fa-solid fa-boxes-stacked text-emerald-400"></i> Beyblades na Coleção (Inventário)
       </h2>
       <div id="acquired-list" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
         <!-- Renderizado via JS -->
@@ -245,8 +245,7 @@
       { "nome": "LeonCrest 7-60GN", "tipo": "Defesa", "sistema": "UX / Unique Line", "na_colecao": false },
       { "nome": "LeonCrest 9-80K", "tipo": "Equilíbrio", "sistema": "UX / Unique Line", "na_colecao": false },
       { "nome": "LeonFang T4-60A", "tipo": "Ataque", "sistema": "CX / Custom Line", "na_colecao": false },
-      { "nome": "Lightning L-Drago 1-60F (Rapid)", "tipo": "Ataque", "sistema": "BX / Basic Line X-Over Project", "na_colecao": false },
-      { "nome": "Lightning L-Drago 1-60F (Upper)", "tipo": "Ataque", "sistema": "BX / Basic Line X-Over Project", "na_colecao": false },
+      { "nome": "Lightning L-Drago 1-60F", "tipo": "Ataque", "sistema": "BX / Basic Line X-Over Project", "na_colecao": false },
       { "nome": "Luke Skywalker 4-80B", "tipo": "Resistência", "sistema": "BX / Basic Line", "na_colecao": false },
       { "nome": "MammothTusk 2-80E", "tipo": "Equilíbrio", "sistema": "BX / Basic Line", "na_colecao": false },
       { "nome": "MammothTusk 7-60S", "tipo": "Defesa", "sistema": "BX / Basic Line", "na_colecao": false },
@@ -351,213 +350,194 @@
       { "nome": "ViperTail 3-80HN", "tipo": "Defesa", "sistema": "BX / Basic Line", "na_colecao": false },
       { "nome": "ViperTail 4-60F", "tipo": "Ataque", "sistema": "BX / Basic Line", "na_colecao": false },
       { "nome": "ViperTail 5-60F", "tipo": "Resistência", "sistema": "BX / Basic Line", "na_colecao": false },
-      { "nome": "ViperTail 5-70D", "tipo": "Defesa", "sistema": "BX / Basic Line", "na_colecao": false },
-      { "nome": "ViperTail 5-80O", "tipo": "Resistência", "sistema": "BX / Basic Line", "na_colecao": false },
-      { "nome": "WeissTiger 3-60U", "tipo": "Equilíbrio", "sistema": "BX / Basic Line", "na_colecao": false },
-      { "nome": "WeissTiger 4-80LR", "tipo": "Ataque", "sistema": "BX / Basic Line", "na_colecao": false },
-      { "nome": "WhaleFlame M3-85HT", "tipo": "Equilíbrio", "sistema": "CX / Custom Line", "na_colecao": false },
-      { "nome": "WhaleWave 1-80GF", "tipo": "Ataque", "sistema": "BX / Basic Line", "na_colecao": false },
-      { "nome": "WhaleWave 3-80GB", "tipo": "Resistência", "sistema": "BX / Basic Line", "na_colecao": false },
-      { "nome": "WhaleWave 4-70HN", "tipo": "Defesa", "sistema": "BX / Basic Line", "na_colecao": false },
-      { "nome": "WhaleWave 5-80E", "tipo": "Equilíbrio", "sistema": "BX / Basic Line", "na_colecao": false },
-      { "nome": "WhaleWave 7-60K", "tipo": "Equilíbrio", "sistema": "BX / Basic Line", "na_colecao": false },
-      { "nome": "WizardArc R4-55LO", "tipo": "Resistência", "sistema": "CX / Custom Line", "na_colecao": false },
-      { "nome": "WizardArrow 3-60T", "tipo": "Equilíbrio", "sistema": "BX / Basic Line", "na_colecao": false },
-      { "nome": "WizardArrow 4-60N", "tipo": "Defesa", "sistema": "BX / Basic Line", "na_colecao": false },
-      { "nome": "WizardArrow 4-80B", "tipo": "Resistência", "sistema": "BX / Basic Line", "na_colecao": false },
-      { "nome": "WizardArrow 4-80GB", "tipo": "Resistência", "sistema": "BX / Basic Line", "na_colecao": false },
-      { "nome": "WizardArrow 4-80N", "tipo": "Defesa", "sistema": "BX / Basic Line", "na_colecao": false },
-      { "nome": "WizardMight R4-55LO", "tipo": "Resistência", "sistema": "CX / Custom Line", "na_colecao": false },
-      { "nome": "WizardRod 1-60R", "tipo": "Ataque", "sistema": "UX / Unique Line", "na_colecao": false },
-      { "nome": "WizardRod 5-70DB", "tipo": "Resistência", "sistema": "UX / Unique Line", "na_colecao": false },
-      { "nome": "WolfFlame D9-65L", "tipo": "Ataque", "sistema": "CX / Custom Line", "na_colecao": false },
-      { "nome": "WolfHunt F0-60DB", "tipo": "Resistência", "sistema": "CX / Custom Line", "na_colecao": false },
-      { "nome": "Wriggle Kraken S 3-85O", "tipo": "Resistência", "sistema": "CX / Custom Line", "na_colecao": false },
-      { "nome": "WyvernGale 0-80C", "tipo": "Ataque", "sistema": "BX / Basic Line", "na_colecao": false },
-      { "nome": "WyvernGale 2-60S", "tipo": "Defesa", "sistema": "BX / Basic Line", "na_colecao": false },
-      { "nome": "WyvernGale 3-60T", "tipo": "Equilíbrio", "sistema": "BX / Basic Line", "na_colecao": false },
-      { "nome": "WyvernGale 5-80GB", "tipo": "Resistência", "sistema": "BX / Basic Line", "na_colecao": false },
-      { "nome": "WyvernHover 2-80GN", "tipo": "Defesa", "sistema": "UX / Unique Line", "na_colecao": false },
-      { "nome": "XenoXcalibur 3-60GF", "tipo": "Ataque", "sistema": "BX / Basic Line X-Over Project", "na_colecao": false },
-      { "nome": "Yell Kong 3-60GB", "tipo": "Resistência", "sistema": "BX / Basic Line", "na_colecao": false }
+      { "nome": "ViperTail 5-70D", "tipo": "Defesa", "sistema": "BX / Basic Line", "na_colecao": false }
     ];
 
-    // Inventário de Peças Filtradas
-    let inventory = {
-      blades: new Map(),
-      ratchets: new Set(),
-      bits: new Set()
-    };
-
-    // Parser Avançado de Peças
-    function parseBeybladeParts(item) {
-      // Remove anotações como (Rapid) ou (Upper) para análise
-      let cleanName = item.nome.replace(/\s*\([^)]*\)/g, "").trim();
-      
-      let blade = "", ratchet = "", bit = "";
-      
-      // Expressão Regular para Capturar Catracas (ex: 3-60, 1-80, BK1-50, S6-60, M-85, M3-85, OW5-70, B0-80)
-      const ratchetRegex = /\b([A-Z]{0,2}\d{1,2}-\d{2})\b/i;
-      const match = cleanName.match(ratchetRegex);
-
-      if (match) {
-        ratchet = match[1];
-        const parts = cleanName.split(match[0]);
-        blade = parts[0].trim();
-        bit = parts[1].trim();
-      } else {
-        // Para itens sem padrão numérico explícito (ex: "EmperorMight HOp" ou "GloryValkyrie LF")
-        const words = cleanName.split(" ");
-        if (words.length > 1) {
-          bit = words.pop();
-          blade = words.join(" ");
-          ratchet = "Integrado";
-        } else {
-          blade = cleanName;
-        }
+    // Parser inteligente para extrair Blade, Ratchet e Bit do nome completo
+    function parsePartName(fullName) {
+      const parts = fullName.trim().split(/\s+/);
+      if (parts.length === 1) {
+        return { blade: parts[0], ratchet: "N/A", bit: "N/A" };
       }
-
-      return { blade, ratchet, bit, tipo: item.tipo || "Indefinido" };
+      const last = parts[parts.length - 1];
+      const secondLast = parts[parts.length - 2];
+      
+      // Verifica se o penúltimo termo tem formato de ratchet (ex: 3-60, 4-80, M-85, S6-60)
+      const ratchetRegex = /^[A-Za-z0-9]+-\d+$/;
+      if (ratchetRegex.test(secondLast)) {
+        const blade = parts.slice(0, parts.length - 2).join(" ");
+        return { blade: blade, ratchet: secondLast, bit: last };
+      } else {
+        // Caso não haja ratchet explícito separado por espaço padrão
+        const blade = parts.slice(0, parts.length - 1).join(" ");
+        return { blade: blade, ratchet: "Padrão", bit: last };
+      }
     }
 
-    // Inicialização dos Dados
-    function initApp() {
-      const acquiredList = database.filter(item => item.na_colecao);
-      
-      // Atualiza Contadores Totais
-      document.getElementById('total-acquired').innerText = acquiredList.length;
-      document.getElementById('total-db').innerText = database.length;
+    let acquiredBlades = [];
+    let acquiredRatchets = [];
+    let acquiredBits = [];
 
-      // Processa e Separa Peças dos Beyblades Adquiridos
-      acquiredList.forEach(item => {
-        const { blade, ratchet, bit, tipo } = parseBeybladeParts(item);
-        if (blade) inventory.blades.set(blade, tipo);
-        if (ratchet && ratchet !== "Integrado") inventory.ratchets.add(ratchet);
-        if (bit) inventory.bits.add(bit);
+    function initManager() {
+      // Atualizar contadores gerais
+      const totalDb = database.length;
+      const acquiredItems = database.filter(item => item.na_colecao);
+      document.getElementById("total-db").innerText = totalDb;
+      document.getElementById("total-acquired").innerText = acquiredItems.length;
+
+      // Extrair peças únicas da coleção adquirida
+      const bladesSet = new Set();
+      const ratchetsSet = new Set();
+      const bitsSet = new Set();
+
+      acquiredItems.forEach(item => {
+        const parsed = parsePartName(item.nome);
+        if (parsed.blade) bladesSet.add(parsed.blade);
+        if (parsed.ratchet) ratchetsSet.add(parsed.ratchet);
+        if (parsed.bit) bitsSet.add(parsed.bit);
       });
 
-      // Preenche os Selects de Combos
-      populateSelect('select-blade', Array.from(inventory.blades.keys()));
-      populateSelect('select-ratchet', Array.from(inventory.ratchets));
-      populateSelect('select-bit', Array.from(inventory.bits));
+      acquiredBlades = Array.from(bladesSet);
+      acquiredRatchets = Array.from(ratchetsSet);
+      acquiredBits = Array.from(bitsSet);
 
-      // Atualiza Métricas
-      document.getElementById('count-blades').innerText = inventory.blades.size;
-      document.getElementById('count-ratchets').innerText = inventory.ratchets.size;
-      document.getElementById('count-bits').innerText = inventory.bits.size;
-      
-      const totalCombos = inventory.blades.size * (inventory.ratchets.size || 1) * (inventory.bits.size || 1);
-      document.getElementById('possible-combos').innerText = totalCombos;
+      // Atualizar métricas visuais das peças
+      document.getElementById("count-blades").innerText = acquiredBlades.length;
+      document.getElementById("count-ratchets").innerText = acquiredRatchets.length;
+      document.getElementById("count-bits").innerText = acquiredBits.length;
 
-      // Renderiza Estatísticas e Inventário
-      renderTypeStats(acquiredList);
-      renderAcquiredList(acquiredList);
+      // Calcular combos possíveis (Combinação de Lâmina x Catraca x Ponta)
+      const possibleCombos = acquiredBlades.length * acquiredRatchets.length * acquiredBits.length;
+      document.getElementById("possible-combos").innerText = possibleCombos;
+
+      // Popular selects de montagem de combos
+      populateSelect("select-blade", acquiredBlades);
+      populateSelect("select-ratchet", acquiredRatchets);
+      populateSelect("select-bit", acquiredBits);
+
+      // Renderizar Estatísticas por Tipo
+      renderTypeStats(acquiredItems);
+
+      // Renderizar Lista do Inventário
+      renderAcquiredList(acquiredItems);
+
+      // Atualizar display inicial do combo
       updateComboDisplay();
     }
 
-    function populateSelect(id, items) {
-      const select = document.getElementById(id);
-      select.innerHTML = '';
-      items.sort().forEach(item => {
-        const opt = document.createElement('option');
+    function populateSelect(elementId, items) {
+      const select = document.getElementById(elementId);
+      select.innerHTML = "";
+      if (items.length === 0) {
+        const opt = document.createElement("option");
+        opt.value = "";
+        opt.innerText = "Nenhuma peça disponível";
+        select.appendChild(opt);
+        return;
+      }
+      items.forEach(item => {
+        const opt = document.createElement("option");
         opt.value = item;
-        opt.textContent = item;
+        opt.innerText = item;
         select.appendChild(opt);
       });
     }
 
     function updateComboDisplay() {
-      const blade = document.getElementById('select-blade').value;
-      const ratchet = document.getElementById('select-ratchet').value;
-      const bit = document.getElementById('select-bit').value;
+      const blade = document.getElementById("select-blade").value || "---";
+      const ratchet = document.getElementById("select-ratchet").value || "---";
+      const bit = document.getElementById("select-bit").value || "---";
 
-      if (!blade) {
-        document.getElementById('combo-title').innerText = "Nenhuma peça disponível";
-        return;
-      }
-
-      document.getElementById('combo-title').innerText = `${blade} ${ratchet ? ratchet : ''}${bit}`;
+      document.getElementById("combo-title").innerText = `${blade} ${ratchet} ${bit}`;
       
-      const bladeType = inventory.blades.get(blade) || "Indefinido";
-      const badge = document.getElementById('combo-type-badge');
-      badge.innerText = `Tipo Predominante: ${bladeType}`;
+      // Encontrar o tipo correspondente se houver na base de dados
+      const match = database.find(item => item.nome.toLowerCase().includes(blade.toLowerCase()));
+      const tipo = match && match.tipo ? match.tipo : "Personalizado";
       
-      const typeColors = {
-        "Ataque": "bg-red-500/20 text-red-400 border-red-500/40",
-        "Defesa": "bg-green-500/20 text-green-400 border-green-500/40",
-        "Resistência": "bg-yellow-500/20 text-yellow-400 border-yellow-500/40",
-        "Equilíbrio": "bg-purple-500/20 text-purple-400 border-purple-500/40"
-      };
+      const badge = document.getElementById("combo-type-badge");
+      badge.innerText = `Tipo: ${tipo}`;
       
-      badge.className = `inline-block px-3 py-1 rounded-full text-xs font-bold uppercase border ${typeColors[bladeType] || 'bg-slate-800 text-slate-400 border-slate-700'}`;
+      // Cores dinâmicas para o badge conforme o tipo
+      badge.className = "inline-block px-3 py-1 rounded-full text-xs font-bold uppercase ";
+      if (tipo === "Ataque") badge.className += "bg-red-500/20 text-red-400 border border-red-500/30";
+      else if (tipo === "Defesa") badge.className += "bg-blue-500/20 text-blue-400 border border-blue-500/30";
+      else if (tipo === "Resistência") badge.className += "bg-emerald-500/20 text-emerald-400 border border-emerald-500/30";
+      else if (tipo === "Equilíbrio") badge.className += "bg-amber-500/20 text-amber-400 border border-amber-500/30";
+      else badge.className += "bg-slate-800 text-slate-400";
     }
 
     function generateRandomCombo() {
-      const getRandom = arr => arr[Math.floor(Math.random() * arr.length)];
+      if (acquiredBlades.length === 0 || acquiredRatchets.length === 0 || acquiredBits.length === 0) return;
       
-      const blades = Array.from(inventory.blades.keys());
-      const ratchets = Array.from(inventory.ratchets);
-      const bits = Array.from(inventory.bits);
+      const randomBlade = acquiredBlades[Math.floor(Math.random() * acquiredBlades.length)];
+      const randomRatchet = acquiredRatchets[Math.floor(Math.random() * acquiredRatchets.length)];
+      const randomBit = acquiredBits[Math.floor(Math.random() * acquiredBits.length)];
 
-      if (blades.length) document.getElementById('select-blade').value = getRandom(blades);
-      if (ratchets.length) document.getElementById('select-ratchet').value = getRandom(ratchets);
-      if (bits.length) document.getElementById('select-bit').value = getRandom(bits);
-      
+      document.getElementById("select-blade").value = randomBlade;
+      document.getElementById("select-ratchet").value = randomRatchet;
+      document.getElementById("select-bit").value = randomBit;
+
       updateComboDisplay();
     }
 
-    function renderTypeStats(items) {
-      const counts = { "Ataque": 0, "Defesa": 0, "Resistência": 0, "Equilíbrio": 0 };
-      items.forEach(i => { if (counts[i.tipo] !== undefined) counts[i.tipo]++; });
+    function renderTypeStats(acquiredItems) {
+      const statsContainer = document.getElementById("type-stats");
+      statsContainer.innerHTML = "";
 
-      const total = items.length || 1;
-      const container = document.getElementById('type-stats');
-      container.innerHTML = '';
+      const counts = { "Ataque": 0, "Defesa": 0, "Resistência": 0, "Equilíbrio": 0, "Outros": 0 };
+      acquiredItems.forEach(item => {
+        if (counts[item.tipo] !== undefined) {
+          counts[item.tipo]++;
+        } else {
+          counts["Outros"]++;
+        }
+      });
 
-      const colorMap = {
-        "Ataque": "bg-red-500",
-        "Defesa": "bg-emerald-500",
-        "Resistência": "bg-amber-500",
-        "Equilíbrio": "bg-purple-500"
-      };
+      const total = acquiredItems.length || 1;
 
-      Object.keys(counts).forEach(tipo => {
-        const pct = Math.round((counts[tipo] / total) * 100);
-        container.innerHTML += `
+      for (const [type, count] of Object.entries(counts)) {
+        if (type === "Outros" && count === 0) continue;
+        const percentage = Math.round((count / total) * 100);
+        
+        let colorClass = "bg-cyan-500";
+        if (type === "Ataque") colorClass = "bg-red-500";
+        if (type === "Defesa") colorClass = "bg-blue-500";
+        if (type === "Resistência") colorClass = "bg-emerald-500";
+        if (type === "Equilíbrio") colorClass = "bg-amber-500";
+
+        statsContainer.innerHTML += `
           <div>
-            <div class="flex justify-between text-xs font-semibold mb-1">
-              <span class="text-slate-300">${tipo}</span>
-              <span class="text-slate-400">${counts[tipo]} (${pct}%)</span>
+            <div class="flex justify-between text-sm mb-1">
+              <span class="text-slate-300 font-medium">${type}</span>
+              <span class="text-slate-400">${count} (${percentage}%)</span>
             </div>
-            <div class="w-full bg-slate-900 rounded-full h-2 overflow-hidden">
-              <div class="${colorMap[tipo]} h-2 rounded-full" style="width: ${pct}%"></div>
+            <div class="w-full bg-slate-900 rounded-full h-2.5 border border-slate-700">
+              <div class="${colorClass} h-2.5 rounded-full" style="width: ${percentage}%"></div>
+            </div>
+          </div>
+        `;
+      }
+    }
+
+    function renderAcquiredList(acquiredItems) {
+      const listContainer = document.getElementById("acquired-list");
+      listContainer.innerHTML = "";
+
+      acquiredItems.forEach(item => {
+        listContainer.innerHTML += `
+          <div class="bg-slate-900 border border-slate-700/60 p-3 rounded-xl flex flex-col justify-between hover:border-cyan-500/50 transition">
+            <span class="font-bold text-slate-200 text-sm">${item.nome}</span>
+            <div class="flex justify-between items-center mt-2">
+              <span class="text-xs px-2 py-0.5 rounded-full bg-slate-800 text-slate-400 font-semibold">${item.tipo || "Misto"}</span>
+              <span class="text-xs text-cyan-400 font-mono">${item.sistema}</span>
             </div>
           </div>
         `;
       });
     }
 
-    function renderAcquiredList(items) {
-      const container = document.getElementById('acquired-list');
-      container.innerHTML = '';
-
-      items.forEach(item => {
-        const { blade, ratchet, bit } = parseBeybladeParts(item);
-        container.innerHTML += `
-          <div class="bg-slate-900/60 p-3 rounded-xl border border-slate-700/60 flex flex-col justify-between">
-            <div class="font-bold text-sm text-slate-200">${item.nome}</div>
-            <div class="mt-2 text-xs flex flex-wrap gap-1">
-              <span class="bg-slate-800 text-cyan-400 px-2 py-0.5 rounded border border-slate-700">${blade}</span>
-              ${ratchet && ratchet !== "Integrado" ? `<span class="bg-slate-800 text-amber-400 px-2 py-0.5 rounded border border-slate-700">${ratchet}</span>` : ''}
-              ${bit ? `<span class="bg-slate-800 text-purple-400 px-2 py-0.5 rounded border border-slate-700">${bit}</span>` : ''}
-            </div>
-          </div>
-        `;
-      });
-    }
-
-    // Inicializar no Carregamento
-    document.addEventListener('DOMContentLoaded', initApp);
+    // Inicializar ao carregar a página
+    window.onload = initManager;
   </script>
 </body>
 </html>
