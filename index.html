@@ -6,7 +6,10 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
     body { background-color: #050505; color: #e2e8f0; }
-    .scroll-container { max-height: 400px; overflow-y: auto; }
+    .scroll-container { max-height: 500px; overflow-y: auto; }
+    /* Estilização para garantir que os selects apareçam */
+    select { color: white; background-color: #1e293b; border: 1px solid #475569; }
+    select option { background-color: #0f172a; }
   </style>
 </head>
 <body class="p-6">
@@ -51,9 +54,9 @@
       <div class="bg-slate-800 p-6 rounded-xl border border-slate-600">
         <h3 class="text-lg font-bold mb-4">Testar Combos (Peças Disponíveis)</h3>
         <div class="grid grid-cols-3 gap-4">
-          <select id="sel-blade" class="bg-black p-2 rounded border border-slate-600"></select>
-          <select id="sel-ratchet" class="bg-black p-2 rounded border border-slate-600"></select>
-          <select id="sel-bit" class="bg-black p-2 rounded border border-slate-600"></select>
+          <select id="sel-blade" class="p-2 rounded w-full"></select>
+          <select id="sel-ratchet" class="p-2 rounded w-full"></select>
+          <select id="sel-bit" class="p-2 rounded w-full"></select>
         </div>
       </div>
     </div>
@@ -62,32 +65,24 @@
 
 <script>
   const fullDatabase = [
-    { id: 1, name: "MeteorDragoon 3-70J", type: "Ataque", blade: "MeteorDragoon", ratchet: "3-70", bit: "J" },
-    { id: 2, name: "SharkGill 5-60FB", type: "Resistência", blade: "SharkGill", ratchet: "5-60", bit: "FB" },
-    { id: 3, name: "HellsScythe 4-60T", type: "Equilíbrio", blade: "HellsScythe", ratchet: "4-60", bit: "T" },
-    { id: 4, name: "Rock Leone 6-80GN", type: "Defesa", blade: "Rock Leone", ratchet: "6-80", bit: "GN" },
-    // Adicione mais do seu banco aqui seguindo o padrão
+    { id: 1, name: "MeteorDragoon 3-70J", blade: "MeteorDragoon", ratchet: "3-70", bit: "J" },
+    { id: 2, name: "SharkGill 5-60FB", blade: "SharkGill", ratchet: "5-60", bit: "FB" },
+    { id: 3, name: "HellsScythe 4-60T", blade: "HellsScythe", ratchet: "4-60", bit: "T" },
+    { id: 4, name: "Rock Leone 6-80GN", blade: "Rock Leone", ratchet: "6-80", bit: "GN" }
   ];
 
-  let state = {
-    owned: [],
-    wishlist: []
-  };
+  let state = { owned: [...fullDatabase] }; // Começa com todos selecionados
 
   function updateStats() {
-    const activeParts = [...state.owned, ...state.wishlist];
-    
-    // Extração única
-    const blades = [...new Set(activeParts.map(p => p.blade))];
-    const ratchets = [...new Set(activeParts.map(p => p.ratchet))];
-    const bits = [...new Set(activeParts.map(p => p.bit))];
+    const blades = [...new Set(state.owned.map(p => p.blade))];
+    const ratchets = [...new Set(state.owned.map(p => p.ratchet))];
+    const bits = [...new Set(state.owned.map(p => p.bit))];
 
     document.getElementById('stat-blades').innerText = blades.length;
     document.getElementById('stat-ratchets').innerText = ratchets.length;
     document.getElementById('stat-bits').innerText = bits.length;
-    document.getElementById('stat-combos').innerText = blades.length * ratchets.length * bits.length;
+    document.getElementById('stat-combos').innerText = (blades.length * ratchets.length * bits.length) || 0;
 
-    // Atualiza Selects
     fillSelect('sel-blade', blades);
     fillSelect('sel-ratchet', ratchets);
     fillSelect('sel-bit', bits);
@@ -100,20 +95,22 @@
 
   function init() {
     const container = document.getElementById('bey-list');
-    fullDatabase.forEach(item => {
-      container.innerHTML += `
-        <div class="flex items-center gap-2 mb-2 p-2 bg-slate-800 rounded">
-          <input type="checkbox" onchange="toggleOwnership(${item.id})" id="check-${item.id}">
-          <label class="text-sm">${item.name}</label>
-        </div>
-      `;
-    });
+    container.innerHTML = fullDatabase.map(item => `
+      <div class="flex items-center gap-2 mb-2 p-2 bg-slate-800 rounded hover:bg-slate-700 transition">
+        <input type="checkbox" checked onchange="toggleOwnership(${item.id})" id="check-${item.id}" class="w-4 h-4">
+        <label class="text-sm cursor-pointer select-none">${item.name}</label>
+      </div>
+    `).join('');
+    
+    updateStats(); // Atualiza na inicialização
   }
 
   function toggleOwnership(id) {
     const item = fullDatabase.find(i => i.id === id);
-    if(state.owned.find(i => i.id === id)) {
-      state.owned = state.owned.filter(i => i.id !== id);
+    const index = state.owned.findIndex(i => i.id === id);
+    
+    if(index > -1) {
+      state.owned.splice(index, 1);
     } else {
       state.owned.push(item);
     }
