@@ -86,7 +86,7 @@
             <hr style="border-color: var(--border-color); margin: 20px 0;">
 
             <div class="form-group">
-                <label>Blade / Combo Base:</label>
+                <label>Blade (Lâmina):</label>
                 <select id="select-blade" onchange="updateCustomCombo()"></select>
             </div>
 
@@ -148,7 +148,38 @@
 </div>
 
 <script>
-// COMBOS EXTRAÍDOS DO DUMP
+// LISTA DE BLADES INDIVIDUAIS
+const BLADES = [
+    "AeroPegasus", "BahamutBlitz", "CobaltDragoon", "DranBrave", "DranBuster", 
+    "DranDagger", "DranSword", "EmperorMight", "GloryValkyrie", "GolemRock", 
+    "HellsChain", "HellsScythe", "ImpactDrake", "KnightMail", "KnightShield", 
+    "MeteorDragoon", "PhoenixRudder", "PhoenixWing", "Rock Leone", "SamuraiSaber", 
+    "SharkEdge", "SharkGill", "SilverWolf", "UnicornSting", "WizardArrow", 
+    "WizardRod", "WyvernGale", "WyvernHover"
+];
+
+// LISTA DE RATCHETS
+const RATCHETS = [
+    "0-70", "0-80", "1-50", "1-60", "1-70", "1-80", "2-60", "2-70", "2-80", 
+    "3-60", "3-70", "3-80", "3-85", "4-50", "4-55", "4-60", "4-70", "4-80", 
+    "5-55", "5-60", "5-70", "5-80", "6-60", "6-70", "6-80", "7-55", "7-60", 
+    "7-70", "7-80", "8-70", "8-80", "9-60", "9-65", "9-70", "9-80", "M-85"
+];
+
+// LISTA DE BITS
+const BITS = [
+    "Accel (A)", "Ball (B)", "Bound Spike (BS)", "Cyclone (C)", "Dot (D)", 
+    "Disk Ball (DB)", "Elevate (E)", "Flat (F)", "Free Ball (FB)", "Gear Ball (GB)", 
+    "Gear Flat (GF)", "Gear Needle (GN)", "Gear Point (GP)", "Gear Rush (GR)", 
+    "Hexa (H)", "High Needle (HN)", "High Taper (HT)", "Impact (I)", "Jolt (J)", 
+    "Kick (K)", "Level (L)", "Low Flat (LF)", "Low Orb (LO)", "Low Rush (LR)", 
+    "Metal Needle (MN)", "Needle (N)", "Orb (O)", "Point (P)", "Quake (Q)", 
+    "Rush (R)", "Rubber Accel (RA)", "Spike (S)", "Taper (T)", "Trans Kick (TK)", 
+    "Trans Point (TP)", "Unite (U)", "Under Needle (UN)", "Vortex (V)", "Wedge (W)", 
+    "Wide Ball (WB)", "Yielding (Y)", "Zap (Z)"
+];
+
+// COMBOS DE FÁBRICA / COLEÇÃO
 const STOCK_COMBOS = [
     { name: "BahamutBlitz BK1-50I", type: "Ataque", line: "C-E", owned: true },
     { name: "DranBrave S6-60V", type: "Ataque", line: "CX", owned: true },
@@ -167,9 +198,6 @@ const STOCK_COMBOS = [
     { name: "WyvernHover 8-80B", type: "Resistência", line: "UX", owned: false }
 ];
 
-const RATCHETS = ["0-70", "0-80", "1-50", "1-60", "1-70", "1-80", "2-60", "2-70", "2-80", "3-60", "3-70", "3-80", "3-85", "4-50", "4-55", "4-60", "4-70", "4-80", "5-55", "5-60", "5-70", "5-80", "6-60", "6-70", "6-80", "7-55", "7-60", "7-70", "7-80", "8-70", "8-80", "9-60", "9-65", "9-70", "9-80", "M-85"];
-const BITS = ["Accel (A)", "Ball (B)", "Bound Spike (BS)", "Cyclone (C)", "Dot (D)", "Disk Ball (DB)", "Elevate (E)", "Flat (F)", "Free Ball (FB)", "Gear Ball (GB)", "Gear Flat (GF)", "Gear Needle (GN)", "Gear Point (GP)", "Gear Rush (GR)", "Hexa (H)", "High Needle (HN)", "High Taper (HT)", "Impact (I)", "Jolt (J)", "Kick (K)", "Level (L)", "Low Flat (LF)", "Low Orb (LO)", "Low Rush (LR)", "Metal Needle (MN)", "Needle (N)", "Orb (O)", "Point (P)", "Quake (Q)", "Rush (R)", "Rubber Accel (RA)", "Spike (S)", "Taper (T)", "Trans Kick (TK)", "Trans Point (TP)", "Unite (U)", "Under Needle (UN)", "Vortex (V)", "Wedge (W)", "Wide Ball (WB)", "Yielding (Y)", "Zap (Z)"];
-
 function init() {
     const selStock = document.getElementById('select-stock');
     STOCK_COMBOS.forEach((item, index) => {
@@ -177,10 +205,7 @@ function init() {
     });
 
     const selBlade = document.getElementById('select-blade');
-    STOCK_COMBOS.forEach(item => {
-        const bladeName = item.name.split(' ')[0];
-        selBlade.innerHTML += `<option value="${bladeName}">${bladeName}</option>`;
-    });
+    BLADES.forEach(b => selBlade.innerHTML += `<option value="${b}">${b}</option>`);
 
     const selRatchet = document.getElementById('select-ratchet');
     RATCHETS.forEach(r => selRatchet.innerHTML += `<option value="${r}">${r}</option>`);
