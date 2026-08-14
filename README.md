@@ -1,341 +1,308 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Beyblade X — Master Collection & Builder</title>
-    <style>
-        :root {
-            --bg-dark: #0f1117;
-            --bg-card: #181b24;
-            --bg-card-hover: #222634;
-            --accent-primary: #ff5500;
-            --accent-blue: #00d2ff;
-            --accent-green: #00e676;
-            --text-main: #f0f2f5;
-            --text-muted: #9aa0a6;
-            --border-color: #2a2f3d;
-            --radius: 12px;
-        }
-
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', system-ui, sans-serif; }
-        body { background-color: var(--bg-dark); color: var(--text-main); padding: 20px; }
-        .container { max-width: 1350px; margin: 0 auto; }
-
-        header {
-            text-align: center; margin-bottom: 25px; padding: 20px;
-            background: linear-gradient(135deg, rgba(255,85,0,0.15) 0%, rgba(0,210,255,0.15) 100%);
-            border: 1px solid var(--border-color); border-radius: var(--radius);
-        }
-        header h1 {
-            font-size: 2.2rem;
-            background: linear-gradient(90deg, var(--accent-primary), var(--accent-blue));
-            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-            margin-bottom: 8px; text-transform: uppercase;
-        }
-
-        .builder-grid { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 25px; }
-        @media (max-width: 980px) { .builder-grid { grid-template-columns: 1fr; } }
-
-        .panel { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius); padding: 25px; }
-        .panel-title { font-size: 1.3rem; color: var(--accent-blue); margin-bottom: 20px; border-bottom: 1px solid var(--border-color); padding-bottom: 10px; }
-
-        .form-group { margin-bottom: 16px; }
-        .form-group label { display: block; font-weight: 600; margin-bottom: 6px; font-size: 0.9rem; }
-        select { width: 100%; padding: 10px; background: var(--bg-dark); border: 1px solid var(--border-color); border-radius: 8px; color: var(--text-main); outline: none; }
-        select:focus { border-color: var(--accent-blue); }
-
-        .badge-row { display: flex; gap: 10px; margin-bottom: 20px; flex-wrap: wrap; }
-        .badge { padding: 6px 14px; border-radius: 20px; font-weight: bold; font-size: 0.85rem; }
-        .badge-owned { background: #00e676; color: #000; }
-        .badge-type { background: #37474f; color: #eceff1; border: 1px solid #546e7a; }
-
-        .stats-summary { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin-bottom: 20px; }
-        .stat-box { background: var(--bg-dark); padding: 12px; border-radius: 8px; border: 1px solid var(--border-color); }
-        .stat-box .label { font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; }
-        .stat-box .value { font-size: 1.2rem; font-weight: bold; color: var(--accent-blue); margin-top: 2px; }
-
-        .stat-bar-group { margin-bottom: 12px; }
-        .stat-bar-label { display: flex; justify-content: space-between; font-size: 0.85rem; margin-bottom: 4px; }
-        .stat-bar-bg { background: var(--bg-dark); height: 8px; border-radius: 4px; border: 1px solid var(--border-color); }
-        .stat-bar-fill { height: 100%; background: linear-gradient(90deg, var(--accent-blue), var(--accent-primary)); border-radius: 4px; width: 0%; transition: width 0.3s ease; }
-
-        .eval-card { background: var(--bg-dark); border-left: 4px solid var(--accent-primary); padding: 12px; border-radius: 0 8px 8px 0; margin-bottom: 12px; }
-        .eval-card h4 { color: var(--accent-primary); margin-bottom: 4px; font-size: 0.9rem; }
-        .eval-card p { font-size: 0.85rem; line-height: 1.4; }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BeyDeck X - Gerador de Combos & Estatísticas</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+  <style>
+    body { background-color: #0f172a; color: #f8fafc; font-family: system-ui, -apple-system, sans-serif; }
+    .card { background-color: #1e293b; border: 1px solid #334155; }
+  </style>
 </head>
-<body>
+<body class="p-4 md:p-8">
 
-<div class="container">
-    <header>
-        <h1>🌀 Beyblade X — Master Collection & Builder</h1>
-        <p>Integrado com sua coleção pessoal e lista completa de componentes</p>
+  <div class="max-w-6xl mx-auto space-y-6">
+    
+    <!-- Header -->
+    <header class="flex flex-col md:flex-row justify-between items-center bg-slate-800 p-6 rounded-2xl border border-slate-700 shadow-xl">
+      <div>
+        <h1 class="text-3xl font-bold bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent">
+          <i class="fa-solid fa-compact-disc rotate-12 mr-2"></i>BeyDeck X Manager
+        </h1>
+        <p class="text-slate-400 text-sm mt-1">Gerenciador de Peças, Combos e Estatísticas de Beyblade X</p>
+      </div>
+      <div class="mt-4 md:mt-0 bg-slate-900 px-4 py-2 rounded-xl border border-slate-700 text-right">
+        <span class="text-xs text-slate-400 uppercase font-semibold tracking-wider block">Status da Coleção</span>
+        <span id="total-acquired" class="text-xl font-bold text-emerald-400">0</span>
+        <span class="text-slate-500 text-sm">/ <span id="total-db">0</span> Beyblades</span>
+      </div>
     </header>
 
-    <div class="builder-grid">
-        <!-- SELEÇÃO DE COMBOS E PEÇAS -->
-        <div class="panel">
-            <div class="panel-title">⚙️ Seleção de Combos & Peças</div>
-
-            <div class="form-group">
-                <label>Selecione um Combo de Fábrica / Coleção:</label>
-                <select id="select-stock" onchange="loadStockCombo()"></select>
-            </div>
-
-            <hr style="border-color: var(--border-color); margin: 20px 0;">
-
-            <div class="form-group">
-                <label>Blade (Lâmina):</label>
-                <select id="select-blade" onchange="updateCustomCombo()"></select>
-            </div>
-
-            <div class="form-group">
-                <label>Ratchet (Catraca):</label>
-                <select id="select-ratchet" onchange="updateCustomCombo()"></select>
-            </div>
-
-            <div class="form-group">
-                <label>Bit (Ponta):</label>
-                <select id="select-bit" onchange="updateCustomCombo()"></select>
-            </div>
-        </div>
-
-        <!-- DIAGNÓSTICO -->
-        <div class="panel">
-            <div class="panel-title">📊 Análise do Combo</div>
-
-            <div class="badge-row">
-                <span id="badge-status" class="badge badge-owned">NA COLEÇÃO</span>
-                <span id="badge-type" class="badge badge-type">ATAQUE / BX</span>
-            </div>
-
-            <div class="stats-summary">
-                <div class="stat-box">
-                    <div class="label">Peso Estimado</div>
-                    <div class="value" id="val-weight">44.5g</div>
-                </div>
-                <div class="stat-box">
-                    <div class="label">Linha de Sistema</div>
-                    <div class="value" id="val-line">UX</div>
-                </div>
-            </div>
-
-            <!-- BARRAS DE ATRIBUTO -->
-            <div class="stat-bar-group">
-                <div class="stat-bar-label"><span>Ataque</span><span id="txt-atk">85%</span></div>
-                <div class="stat-bar-bg"><div id="bar-atk" class="stat-bar-fill"></div></div>
-            </div>
-            <div class="stat-bar-group">
-                <div class="stat-bar-label"><span>Defesa</span><span id="txt-def">50%</span></div>
-                <div class="stat-bar-bg"><div id="bar-def" class="stat-bar-fill"></div></div>
-            </div>
-            <div class="stat-bar-group">
-                <div class="stat-bar-label"><span>Stamina</span><span id="txt-sta">40%</span></div>
-                <div class="stat-bar-bg"><div id="bar-sta" class="stat-bar-fill"></div></div>
-            </div>
-            <div class="stat-bar-group">
-                <div class="stat-bar-label"><span>Mobilidade (X-Dash)</span><span id="txt-mob">90%</span></div>
-                <div class="stat-bar-bg"><div id="bar-mob" class="stat-bar-fill"></div></div>
-            </div>
-
-            <div class="eval-card">
-                <h4>💡 Diagnóstico Técnico</h4>
-                <p id="eval-text">Analisando o combo selecionado...</p>
-            </div>
-        </div>
+    <!-- Métricas Rápidas das Peças -->
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+      <div class="card p-4 rounded-xl text-center">
+        <i class="fa-solid fa-shield-halved text-cyan-400 text-2xl mb-1"></i>
+        <div class="text-2xl font-bold" id="count-blades">0</div>
+        <div class="text-xs text-slate-400 font-medium uppercase">Lâminas (Blades)</div>
+      </div>
+      <div class="card p-4 rounded-xl text-center">
+        <i class="fa-solid fa-gear text-amber-400 text-2xl mb-1"></i>
+        <div class="text-2xl font-bold" id="count-ratchets">0</div>
+        <div class="text-xs text-slate-400 font-medium uppercase">Catracas (Ratchets)</div>
+      </div>
+      <div class="card p-4 rounded-xl text-center">
+        <i class="fa-solid fa-vortex text-purple-400 text-2xl mb-1"></i>
+        <div class="text-2xl font-bold" id="count-bits">0</div>
+        <div class="text-xs text-slate-400 font-medium uppercase">Pontas (Bits)</div>
+      </div>
+      <div class="card p-4 rounded-xl text-center">
+        <i class="fa-solid fa-bolt text-emerald-400 text-2xl mb-1"></i>
+        <div class="text-2xl font-bold" id="possible-combos">0</div>
+        <div class="text-xs text-slate-400 font-medium uppercase">Combos Possíveis</div>
+      </div>
     </div>
-</div>
 
-<script>
-// BANCO DE ATRIBUTOS DAS PEÇAS (BASE DE CÁLCULO)
-const BLADES_DB = {
-    "DranSword": { weight: 35.0, line: "BX", atk: 55, def: 20, sta: 15, mob: 30 },
-    "DranBuster": { weight: 38.0, line: "UX", atk: 65, def: 15, sta: 10, mob: 35 },
-    "DranDagger": { weight: 34.5, line: "BX", atk: 50, def: 20, sta: 20, mob: 30 },
-    "DranBrave": { weight: 36.0, line: "CX", atk: 58, def: 18, sta: 15, mob: 32 },
-    "HellsScythe": { weight: 33.0, line: "BX", atk: 30, def: 30, sta: 40, mob: 20 },
-    "HellsChain": { weight: 33.5, line: "BX", atk: 32, def: 35, sta: 35, mob: 20 },
-    "WizardRod": { weight: 35.5, line: "UX", atk: 15, def: 40, sta: 65, mob: 15 },
-    "WizardArrow": { weight: 32.0, line: "BX", atk: 15, def: 35, sta: 55, mob: 15 },
-    "KnightShield": { weight: 32.5, line: "BX", atk: 20, def: 55, sta: 25, mob: 15 },
-    "KnightMail": { weight: 36.5, line: "UX", atk: 25, def: 60, sta: 20, mob: 15 },
-    "PhoenixWing": { weight: 38.0, line: "BX", atk: 60, def: 30, sta: 20, mob: 25 },
-    "PhoenixRudder": { weight: 34.0, line: "UX", atk: 20, def: 30, sta: 58, mob: 18 },
-    "SharkEdge": { weight: 34.0, line: "BX", atk: 60, def: 15, sta: 10, mob: 35 },
-    "SharkGill": { weight: 33.0, line: "BX", atk: 30, def: 25, sta: 50, mob: 20 },
-    "CobaltDragoon": { weight: 37.5, line: "BX", atk: 58, def: 20, sta: 15, mob: 30 },
-    "AeroPegasus": { weight: 37.0, line: "UX", atk: 55, def: 25, sta: 25, mob: 30 },
-    "UnicornSting": { weight: 33.5, line: "BX", atk: 35, def: 35, sta: 35, mob: 25 },
-    "SilverWolf": { weight: 36.0, line: "UX", atk: 20, def: 35, sta: 60, mob: 15 },
-    "ImpactDrake": { weight: 38.5, line: "UX", atk: 62, def: 20, sta: 10, mob: 30 },
-    "GolemRock": { weight: 36.0, line: "UX", atk: 20, def: 58, sta: 25, mob: 15 },
-    "MeteorDragoon": { weight: 35.0, line: "UX", atk: 52, def: 20, sta: 20, mob: 30 },
-    "WyvernGale": { weight: 32.0, line: "BX", atk: 20, def: 30, sta: 50, mob: 20 },
-    "WyvernHover": { weight: 35.5, line: "UX", atk: 18, def: 30, sta: 62, mob: 15 },
-    "Rock Leone": { weight: 34.0, line: "X-Over", atk: 25, def: 50, sta: 30, mob: 15 },
-    "SamuraiSaber": { weight: 36.0, line: "UX", atk: 50, def: 25, sta: 20, mob: 28 },
-    "BahamutBlitz": { weight: 37.0, line: "C-E", atk: 56, def: 22, sta: 18, mob: 30 },
-    "EmperorMight": { weight: 35.0, line: "CX", atk: 35, def: 35, sta: 35, mob: 25 },
-    "GloryValkyrie": { weight: 36.5, line: "U-E", atk: 58, def: 20, sta: 15, mob: 32 }
-};
+    <!-- Seção Principal: Gerador de Combos & Estatísticas -->
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+      
+      <!-- Gerador de Combos (2 Colunas) -->
+      <div class="card p-6 rounded-2xl lg:col-span-2 space-y-6">
+        <div class="flex justify-between items-center border-b border-slate-700 pb-4">
+          <h2 class="text-xl font-bold text-slate-200 flex items-center gap-2">
+            <i class="fa-solid fa-sliders text-cyan-400"></i> Ofina de Combos
+          </h2>
+          <button onclick="generateRandomCombo()" class="bg-cyan-600 hover:bg-cyan-500 text-white text-sm px-4 py-2 rounded-lg font-semibold transition flex items-center gap-2 shadow-lg shadow-cyan-900/40">
+            <i class="fa-solid fa-dice"></i> Combo Aleatório
+          </button>
+        </div>
 
-const RATCHETS_DB = {
-    "0-70": 6.2, "0-80": 6.8, "1-50": 5.5, "1-60": 6.0, "1-70": 6.5, "1-80": 7.0,
-    "2-60": 6.0, "2-70": 6.4, "2-80": 6.8, "3-60": 6.2, "3-70": 6.6, "3-80": 7.1, "3-85": 7.4,
-    "4-50": 5.8, "4-55": 6.0, "4-60": 6.4, "4-70": 6.8, "4-80": 7.2, "5-55": 6.2,
-    "5-60": 6.5, "5-70": 6.9, "5-80": 7.3, "6-60": 6.6, "6-70": 7.0, "6-80": 7.4,
-    "7-55": 6.4, "7-60": 6.7, "7-70": 7.1, "7-80": 7.5, "8-70": 7.2, "8-80": 7.6,
-    "9-60": 6.3, "9-65": 6.6, "9-70": 6.9, "9-80": 7.3, "M-85": 7.8
-};
+        <!-- Seletores de Peças -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div>
+            <label class="block text-xs font-semibold text-slate-400 uppercase mb-2">Lâmina (Blade)</label>
+            <select id="select-blade" class="w-full bg-slate-900 border border-slate-700 rounded-xl p-3 text-sm focus:border-cyan-500 outline-none text-slate-200" onchange="updateComboDisplay()">
+            </select>
+          </div>
+          <div>
+            <label class="block text-xs font-semibold text-slate-400 uppercase mb-2">Catraca (Ratchet)</label>
+            <select id="select-ratchet" class="w-full bg-slate-900 border border-slate-700 rounded-xl p-3 text-sm focus:border-cyan-500 outline-none text-slate-200" onchange="updateComboDisplay()">
+            </select>
+          </div>
+          <div>
+            <label class="block text-xs font-semibold text-slate-400 uppercase mb-2">Ponta (Bit)</label>
+            <select id="select-bit" class="w-full bg-slate-900 border border-slate-700 rounded-xl p-3 text-sm focus:border-cyan-500 outline-none text-slate-200" onchange="updateComboDisplay()">
+            </select>
+          </div>
+        </div>
 
-const BITS_DB = {
-    "Flat (F)": { weight: 2.4, atk: 30, def: 5, sta: 5, mob: 45 },
-    "Low Flat (LF)": { weight: 2.4, atk: 35, def: 5, sta: 5, mob: 50 },
-    "Gear Flat (GF)": { weight: 2.6, atk: 35, def: 5, sta: 5, mob: 52 },
-    "Accel (A)": { weight: 2.5, atk: 32, def: 5, sta: 5, mob: 48 },
-    "Rubber Accel (RA)": { weight: 2.6, atk: 38, def: 5, sta: 0, mob: 55 },
-    "Rush (R)": { weight: 2.4, atk: 25, def: 10, sta: 15, mob: 40 },
-    "Low Rush (LR)": { weight: 2.4, atk: 28, def: 10, sta: 12, mob: 42 },
-    "Gear Rush (GR)": { weight: 2.5, atk: 28, def: 10, sta: 12, mob: 44 },
-    "Ball (B)": { weight: 2.2, atk: 5, def: 20, sta: 45, mob: 10 },
-    "Disk Ball (DB)": { weight: 2.8, atk: 5, def: 25, sta: 40, mob: 10 },
-    "Free Ball (FB)": { weight: 2.3, atk: 5, def: 18, sta: 48, mob: 12 },
-    "Gear Ball (GB)": { weight: 2.4, atk: 10, def: 15, sta: 40, mob: 20 },
-    "Wide Ball (WB)": { weight: 2.3, atk: 5, def: 28, sta: 38, mob: 10 },
-    "Orb (O)": { weight: 2.2, atk: 5, def: 15, sta: 48, mob: 10 },
-    "Low Orb (LO)": { weight: 2.2, atk: 5, def: 18, sta: 46, mob: 10 },
-    "Needle (N)": { weight: 2.1, atk: 5, def: 40, sta: 20, mob: 10 },
-    "High Needle (HN)": { weight: 2.3, atk: 5, def: 38, sta: 22, mob: 12 },
-    "Gear Needle (GN)": { weight: 2.3, atk: 10, def: 35, sta: 18, mob: 20 },
-    "Metal Needle (MN)": { weight: 2.9, atk: 5, def: 45, sta: 25, mob: 8 },
-    "Under Needle (UN)": { weight: 2.2, atk: 5, def: 38, sta: 22, mob: 10 },
-    "Hexa (H)": { weight: 2.7, atk: 15, def: 35, sta: 20, mob: 20 },
-    "Point (P)": { weight: 2.3, atk: 20, def: 20, sta: 25, mob: 25 },
-    "Gear Point (GP)": { weight: 2.4, atk: 22, def: 18, sta: 22, mob: 28 },
-    "Taper (T)": { weight: 2.3, atk: 22, def: 18, sta: 20, mob: 30 },
-    "High Taper (HT)": { weight: 2.4, atk: 20, def: 18, sta: 22, mob: 32 },
-    "Unite (U)": { weight: 2.4, atk: 20, def: 22, sta: 25, mob: 25 },
-    "Yielding (Y)": { weight: 2.2, atk: 0, def: 10, sta: 52, mob: 8 },
-    "Wedge (W)": { weight: 2.2, atk: 5, def: 30, sta: 25, mob: 10 },
-    "Wide Wedge (WW)": { weight: 2.3, atk: 5, def: 35, sta: 22, mob: 10 },
-    "Quake (Q)": { weight: 2.3, atk: 35, def: 5, sta: 5, mob: 45 },
-    "Spike (S)": { weight: 2.1, atk: 5, def: 25, sta: 25, mob: 10 },
-    "Bound Spike (BS)": { weight: 2.5, atk: 5, def: 32, sta: 22, mob: 10 },
-    "Cyclone (C)": { weight: 2.4, atk: 28, def: 10, sta: 15, mob: 40 },
-    "Dot (D)": { weight: 2.2, atk: 5, def: 30, sta: 25, mob: 10 },
-    "Elevate (E)": { weight: 2.5, atk: 15, def: 25, sta: 25, mob: 20 },
-    "Impact (I)": { weight: 2.5, atk: 32, def: 10, sta: 10, mob: 40 },
-    "Jolt (J)": { weight: 2.4, atk: 30, def: 8, sta: 8, mob: 42 },
-    "Kick (K)": { weight: 2.3, atk: 18, def: 18, sta: 20, mob: 28 },
-    "Level (L)": { weight: 2.5, atk: 20, def: 20, sta: 25, mob: 25 },
-    "Trans Kick (TK)": { weight: 2.4, atk: 20, def: 18, sta: 22, mob: 28 },
-    "Trans Point (TP)": { weight: 2.4, atk: 22, def: 20, sta: 22, mob: 26 },
-    "Vortex (V)": { weight: 2.5, atk: 28, def: 10, sta: 12, mob: 42 },
-    "Zap (Z)": { weight: 2.6, atk: 25, def: 15, sta: 15, mob: 35 }
-};
+        <!-- Card do Combo Resultante -->
+        <div class="bg-slate-900/80 border border-cyan-500/30 rounded-2xl p-6 text-center space-y-3 relative overflow-hidden">
+          <div class="text-xs uppercase tracking-widest text-cyan-400 font-bold">Configuração Atual</div>
+          <div id="combo-title" class="text-2xl md:text-3xl font-extrabold text-white tracking-wide">---</div>
+          <div id="combo-type-badge" class="inline-block px-3 py-1 rounded-full text-xs font-bold uppercase bg-slate-800 text-slate-400">
+            Tipo: Padrão da Lâmina
+          </div>
+        </div>
+      </div>
 
-// COMBOS DE FÁBRICA / COLEÇÃO
-const STOCK_COMBOS = [
-    { name: "BahamutBlitz BK1-50I", blade: "BahamutBlitz", ratchet: "1-50", bit: "Impact (I)", type: "Ataque", line: "C-E", owned: true },
-    { name: "DranBrave S6-60V", blade: "DranBrave", ratchet: "6-60", bit: "Vortex (V)", type: "Ataque", line: "CX", owned: true },
-    { name: "DranSword 3-60F", blade: "DranSword", ratchet: "3-60", bit: "Flat (F)", type: "Ataque", line: "BX", owned: true },
-    { name: "EmperorMight HOp", blade: "EmperorMight", ratchet: "4-60", bit: "Orb (O)", type: "Equilíbrio", line: "CX", owned: true },
-    { name: "GloryValkyrie LF", blade: "GloryValkyrie", ratchet: "3-60", bit: "Low Flat (LF)", type: "Ataque", line: "U-E", owned: true },
-    { name: "GolemRock M-85HN", blade: "GolemRock", ratchet: "M-85", bit: "High Needle (HN)", type: "Defesa", line: "UX", owned: true },
-    { name: "HellsScythe 4-60T", blade: "HellsScythe", ratchet: "4-60", bit: "Taper (T)", type: "Equilíbrio", line: "BX", owned: true },
-    { name: "MeteorDragoon 3-70J", blade: "MeteorDragoon", ratchet: "3-70", bit: "Jolt (J)", type: "Ataque", line: "UX", owned: true },
-    { name: "Rock Leone 6-80GN", blade: "Rock Leone", ratchet: "6-80", bit: "Gear Needle (GN)", type: "Defesa", line: "BX X-Over", owned: true },
-    { name: "SharkGill 5-60FB", blade: "SharkGill", ratchet: "5-60", bit: "Free Ball (FB)", type: "Resistência", line: "BX", owned: true },
-    { name: "UnicornSting 5-60GP", blade: "UnicornSting", ratchet: "5-60", bit: "Gear Point (GP)", type: "Equilíbrio", line: "BX", owned: true },
-    { name: "AeroPegasus 3-70A", blade: "AeroPegasus", ratchet: "3-70", bit: "Accel (A)", type: "Ataque", line: "UX", owned: false },
-    { name: "SilverWolf 9-70R", blade: "SilverWolf", ratchet: "9-70", bit: "Rush (R)", type: "Ataque", line: "UX", owned: false },
-    { name: "WizardRod 1-60R", blade: "WizardRod", ratchet: "1-60", bit: "Rush (R)", type: "Ataque", line: "UX", owned: false },
-    { name: "WyvernHover 8-80B", blade: "WyvernHover", ratchet: "8-80", bit: "Ball (B)", type: "Resistência", line: "UX", owned: false }
-];
+      <!-- Estatísticas da Coleção (1 Coluna) -->
+      <div class="card p-6 rounded-2xl space-y-4">
+        <h2 class="text-xl font-bold text-slate-200 border-b border-slate-700 pb-4 flex items-center gap-2">
+          <i class="fa-solid fa-chart-pie text-purple-400"></i> Distribuição por Tipo
+        </h2>
+        <div id="type-stats" class="space-y-4">
+          <!-- Renderizado via JS -->
+        </div>
+      </div>
 
-function init() {
-    const selStock = document.getElementById('select-stock');
-    STOCK_COMBOS.forEach((item, index) => {
-        selStock.innerHTML += `<option value="${index}">${item.owned ? '✅ [Coleção] ' : '⭕ '} ${item.name} (${item.type})</option>`;
-    });
+    </div>
 
-    const selBlade = document.getElementById('select-blade');
-    Object.keys(BLADES_DB).sort().forEach(b => selBlade.innerHTML += `<option value="${b}">${b}</option>`);
+    <!-- Lista de Beyblades Adquiridos (Inventário Ativo) -->
+    <div class="card p-6 rounded-2xl space-y-4">
+      <h2 class="text-xl font-bold text-slate-200 border-b border-slate-700 pb-4 flex items-center gap-2">
+        <i class="fa-solid fa-boxes-stacked text-emerald-400"></i> Beyblades na Coleção (Peças Dísponiveis)
+      </h2>
+      <div id="acquired-list" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
+        <!-- Renderizado via JS -->
+      </div>
+    </div>
 
-    const selRatchet = document.getElementById('select-ratchet');
-    Object.keys(RATCHETS_DB).forEach(r => selRatchet.innerHTML += `<option value="${r}">${r}</option>`);
+  </div>
 
-    const selBit = document.getElementById('select-bit');
-    Object.keys(BITS_DB).sort().forEach(b => selBit.innerHTML += `<option value="${b}">${b}</option>`);
+  <script>
+    // Banco de Dados Integrado
+    const database = [
+      { nome: "BahamutBlitz BK1-50I", tipo: "Ataque", sistema: "C-E", na_colecao: true },
+      { nome: "DranBrave S6-60V", tipo: "Ataque", sistema: "CX", na_colecao: true },
+      { nome: "DranSword 3-60F", tipo: "Ataque", sistema: "BX", na_colecao: true },
+      { nome: "EmperorMight HOp", tipo: "Equilíbrio", sistema: "CX", na_colecao: true },
+      { nome: "GloryValkyrie LF", tipo: "Ataque", sistema: "BX", na_colecao: true },
+      { nome: "GolemRock M-85HN", tipo: "Defesa", sistema: "UX", na_colecao: true },
+      { nome: "HellsScythe 4-60T", tipo: "Equilíbrio", sistema: "BX", na_colecao: true },
+      { nome: "MeteorDragoon 3-70J", tipo: "Ataque", sistema: "UX", na_colecao: true },
+      { nome: "Rock Leone 6-80GN", tipo: "Defesa", sistema: "BX", na_colecao: true },
+      { nome: "SharkGill 5-60FB", tipo: "Resistência", sistema: "BX", na_colecao: true },
+      { nome: "UnicornSting 5-60GP", tipo: "Equilíbrio", sistema: "BX", na_colecao: true },
+      // Itens não adquiridos para controle do banco
+      { nome: "KnightShield 3-80N", tipo: "Defesa", sistema: "BX", na_colecao: false },
+      { nome: "SilverWolf 9-70R", tipo: "Ataque", sistema: "UX", na_colecao: false },
+      { nome: "WizardArrow 4-80B", tipo: "Resistência", sistema: "BX", na_colecao: false }
+    ];
 
-    loadStockCombo();
-}
+    // Arrays de Peças Extraídas
+    let inventory = {
+      blades: new Map(), // name -> { type, origin }
+      ratchets: new Set(),
+      bits: new Set()
+    };
 
-function loadStockCombo() {
-    const idx = document.getElementById('select-stock').value;
-    const combo = STOCK_COMBOS[idx];
+    // Função para Desmembrar Peças
+    function parseBeybladeParts(item) {
+      const parts = item.nome.split(" ");
+      let blade = "", ratchet = "", bit = "";
 
-    // Atualiza os dropdowns para sincronizar com o combo de fábrica
-    if (combo.blade) document.getElementById('select-blade').value = combo.blade;
-    if (combo.ratchet) document.getElementById('select-ratchet').value = combo.ratchet;
-    if (combo.bit) document.getElementById('select-bit').value = combo.bit;
+      if (parts.length === 2) {
+        blade = parts[0];
+        const code = parts[1];
+        // Verifica se tem ratchet separado por hífen ex: 3-60F ou BK1-50I ou M-85HN
+        const match = code.match(/^([A-Z0-9]+-[0-9]+|S[0-9]-[0-9]+|BK[0-9]-[0-9]+|M-[0-9]+)?([A-Z]+)$/i);
+        if (match) {
+          ratchet = match[1] || "Integrado";
+          bit = match[2] || "";
+        } else {
+          bit = code;
+        }
+      } else if (parts.length >= 3) {
+        bit = parts.pop();
+        ratchet = parts.pop();
+        blade = parts.join(" ");
+      }
 
-    document.getElementById('badge-status').innerText = combo.owned ? "NA COLEÇÃO" : "FORA DA COLEÇÃO";
-    document.getElementById('badge-status').style.background = combo.owned ? "#00e676" : "#ff1744";
-    document.getElementById('badge-status').style.color = combo.owned ? "#000" : "#fff";
-
-    document.getElementById('badge-type').innerText = `${combo.type.toUpperCase()} / ${combo.line}`;
-
-    updateCustomCombo(false); // Recalcula atributos exatos do combo de fábrica
-}
-
-function updateCustomCombo(isCustom = true) {
-    const bladeKey = document.getElementById('select-blade').value;
-    const ratchetKey = document.getElementById('select-ratchet').value;
-    const bitKey = document.getElementById('select-bit').value;
-
-    const bladeData = BLADES_DB[bladeKey] || { weight: 35, line: "BX", atk: 40, def: 30, sta: 30, mob: 20 };
-    const ratchetWeight = RATCHETS_DB[ratchetKey] || 6.5;
-    const bitData = BITS_DB[bitKey] || { weight: 2.3, atk: 15, def: 15, sta: 15, mob: 20 };
-
-    // CÁLCULO DE PESO REAL
-    const totalWeight = (bladeData.weight + ratchetWeight + bitData.weight).toFixed(1);
-
-    // CÁLCULO DOS ATRIBUTOS
-    const totalAtk = Math.min(100, bladeData.atk + bitData.atk);
-    const totalDef = Math.min(100, bladeData.def + bitData.def);
-    const totalSta = Math.min(100, bladeData.sta + bitData.sta);
-    const totalMob = Math.min(100, bladeData.mob + bitData.mob);
-
-    // ATUALIZAÇÃO DA INTERFACE
-    document.getElementById('val-weight').innerText = `${totalWeight}g`;
-    document.getElementById('val-line').innerText = bladeData.line;
-
-    if (isCustom) {
-        document.getElementById('badge-status').innerText = "COMBO CUSTOMIZADO";
-        document.getElementById('badge-status').style.background = "#00d2ff";
-        document.getElementById('badge-status').style.color = "#000";
-        document.getElementById('badge-type').innerText = `CUSTOM / ${bladeData.line}`;
-        document.getElementById('eval-text').innerText = `Combinação de ${bladeKey} em Ratchet ${ratchetKey} com Bit ${bitKey}. Peso total calculado: ${totalWeight}g.`;
+      return { blade, ratchet, bit, tipo: item.tipo };
     }
 
-    updateBars(totalAtk, totalDef, totalSta, totalMob);
-}
+    // Inicialização dos Dados
+    function initApp() {
+      const acquiredList = database.filter(item => item.na_colecao);
+      
+      // Atualiza Contadores Totais
+      document.getElementById('total-acquired').innerText = acquiredList.length;
+      document.getElementById('total-db').innerText = database.length;
 
-function updateBars(atk, def, sta, mob) {
-    document.getElementById('txt-atk').innerText = `${atk}%`;
-    document.getElementById('bar-atk').style.width = `${atk}%`;
-    document.getElementById('txt-def').innerText = `${def}%`;
-    document.getElementById('bar-def').style.width = `${def}%`;
-    document.getElementById('txt-sta').innerText = `${sta}%`;
-    document.getElementById('bar-sta').style.width = `${sta}%`;
-    document.getElementById('txt-mob').innerText = `${mob}%`;
-    document.getElementById('bar-mob').style.width = `${mob}%`;
-}
+      // Processa e Separa Peças dos Beyblades Adquiridos
+      acquiredList.forEach(item => {
+        const { blade, ratchet, bit, tipo } = parseBeybladeParts(item);
+        if (blade) inventory.blades.set(blade, tipo);
+        if (ratchet && ratchet !== "Integrado") inventory.ratchets.add(ratchet);
+        if (bit) inventory.bits.add(bit);
+      });
 
-window.onload = init;
-</script>
+      // Preenche os Selects de Combos
+      populateSelect('select-blade', Array.from(inventory.blades.keys()));
+      populateSelect('select-ratchet', Array.from(inventory.ratchets));
+      populateSelect('select-bit', Array.from(inventory.bits));
 
+      // Atualiza Métricas
+      document.getElementById('count-blades').innerText = inventory.blades.size;
+      document.getElementById('count-ratchets').innerText = inventory.ratchets.size;
+      document.getElementById('count-bits').innerText = inventory.bits.size;
+      
+      const totalCombos = inventory.blades.size * (inventory.ratchets.size || 1) * (inventory.bits.size || 1);
+      document.getElementById('possible-combos').innerText = totalCombos;
+
+      // Renderiza Estatísticas e Inventário
+      renderTypeStats(acquiredList);
+      renderAcquiredList(acquiredList);
+      updateComboDisplay();
+    }
+
+    function populateSelect(id, items) {
+      const select = document.getElementById(id);
+      select.innerHTML = '';
+      items.sort().forEach(item => {
+        const opt = document.createElement('option');
+        opt.value = item;
+        opt.textContent = item;
+        select.appendChild(opt);
+      });
+    }
+
+    function updateComboDisplay() {
+      const blade = document.getElementById('select-blade').value;
+      const ratchet = document.getElementById('select-ratchet').value;
+      const bit = document.getElementById('select-bit').value;
+
+      document.getElementById('combo-title').innerText = `${blade} ${ratchet}${bit}`;
+      
+      const bladeType = inventory.blades.get(blade) || "Desconhecido";
+      const badge = document.getElementById('combo-type-badge');
+      badge.innerText = `Tipo Predominante: ${bladeType}`;
+      
+      // Cores por tipo
+      const typeColors = {
+        "Ataque": "bg-red-500/20 text-red-400 border-red-500/40",
+        "Defesa": "bg-green-500/20 text-green-400 border-green-500/40",
+        "Resistência": "bg-yellow-500/20 text-yellow-400 border-yellow-500/40",
+        "Equilíbrio": "bg-purple-500/20 text-purple-400 border-purple-500/40"
+      };
+      
+      badge.className = `inline-block px-3 py-1 rounded-full text-xs font-bold uppercase border ${typeColors[bladeType] || 'bg-slate-800 text-slate-400'}`;
+    }
+
+    function generateRandomCombo() {
+      const getRandom = arr => arr[Math.floor(Math.random() * arr.length)];
+      
+      document.getElementById('select-blade').value = getRandom(Array.from(inventory.blades.keys()));
+      document.getElementById('select-ratchet').value = getRandom(Array.from(inventory.ratchets));
+      document.getElementById('select-bit').value = getRandom(Array.from(inventory.bits));
+      
+      updateComboDisplay();
+    }
+
+    function renderTypeStats(items) {
+      const counts = { "Ataque": 0, "Defesa": 0, "Resistência": 0, "Equilíbrio": 0 };
+      items.forEach(i => { if (counts[i.tipo] !== undefined) counts[i.tipo]++; });
+
+      const total = items.length || 1;
+      const container = document.getElementById('type-stats');
+      container.innerHTML = '';
+
+      const colorMap = {
+        "Ataque": "bg-red-500",
+        "Defesa": "bg-emerald-500",
+        "Resistência": "bg-amber-500",
+        "Equilíbrio": "bg-purple-500"
+      };
+
+      Object.keys(counts).forEach(tipo => {
+        const pct = Math.round((counts[tipo] / total) * 100);
+        container.innerHTML += `
+          <div>
+            <div class="flex justify-between text-xs font-semibold mb-1">
+              <span class="text-slate-300">${tipo}</span>
+              <span class="text-slate-400">${counts[tipo]} (${pct}%)</span>
+            </div>
+            <div class="w-full bg-slate-900 rounded-full h-2 overflow-hidden">
+              <div class="${colorMap[tipo]} h-2 rounded-full" style="width: ${pct}%"></div>
+            </div>
+          </div>
+        `;
+      });
+    }
+
+    function renderAcquiredList(items) {
+      const container = document.getElementById('acquired-list');
+      container.innerHTML = '';
+
+      items.forEach(item => {
+        const { blade, ratchet, bit } = parseBeybladeParts(item);
+        container.innerHTML += `
+          <div class="bg-slate-900/60 p-3 rounded-xl border border-slate-700/60 flex flex-col justify-between">
+            <div class="font-bold text-sm text-slate-200">${item.nome}</div>
+            <div class="mt-2 text-xs flex flex-wrap gap-1">
+              <span class="bg-slate-800 text-cyan-400 px-2 py-0.5 rounded border border-slate-700">${blade}</span>
+              ${ratchet !== "Integrado" ? `<span class="bg-slate-800 text-amber-400 px-2 py-0.5 rounded border border-slate-700">${ratchet}</span>` : ''}
+              <span class="bg-slate-800 text-purple-400 px-2 py-0.5 rounded border border-slate-700">${bit}</span>
+            </div>
+          </div>
+        `;
+      });
+    }
+
+    // Inicializar na Carga da Página
+    document.addEventListener('DOMContentLoaded', initApp);
+  </script>
 </body>
 </html>
